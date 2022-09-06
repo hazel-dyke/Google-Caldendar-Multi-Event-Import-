@@ -1,4 +1,4 @@
-# Google-Caldendar-Multi-Event-Import
+# Google-Calendar-Multi-Event-Import
 Python3 script to generate a CSV file that allows a list of events to be imported directly into Google calendar.  
 
 The script calculates the dates of the last Saturday of each month and also the last working day before the 29th of each month and
