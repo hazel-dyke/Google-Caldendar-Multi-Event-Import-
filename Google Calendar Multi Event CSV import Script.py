@@ -12,14 +12,33 @@ import datetime
 start_year = 2020
 end_year = 2020
 
+"""Functions"""
+def is_weekday(date):
+    return date.weekday() < 5
+
+# A function to get the last working day before the 29th of each month of the year
+def get_last_day_of_month(year):
+    for month in range(1,13):
+        for day in range(28, 0, -1):
+            date = datetime.date(year, month, day)
+            if is_weekday(date) and day <= 28:
+                date_string = f"{month:02d}" + "/" + str(day) + "/" + f"{year}"
+                print(date_string)
+                f.write("Payday" + "," + date_string + "," + "TRUE" + '\n')
+                break
+        else:
+            continue
+    return
+"""end of Functions"""
+
 #   Create a file called "last_sats_and_paydays.csv".
-with open('last_sats_and_paydays.csv', 'w') as f:
+with open('last_sats_and_paydays_v2.csv', 'w') as f:
     print("file created")
 
 #   Write a heading to the file that will make it suitable for a Google calendar import, which expects the following columns:
 #   Subject, Start Date, All Day Event, Start Time, End Time, Location, Description (Only the first 2 headers in this list are required. The rest are optional.)
 
-with open('last_sats_and_paydays.csv', 'r+') as f:
+with open('last_sats_and_paydays_v2.csv', 'r+') as f:
     f.write("Subject" + "," + "start date" + "," + "All Day Event" + '\n')
 
 
@@ -46,34 +65,9 @@ with open('last_sats_and_paydays.csv', 'r+') as f:
             print(date_string)
             f.write("Last Saturday" + "," + date_string + "," + "TRUE" + '\n')
 
+
         print("\n")
         print(f"{year} paydays (last working day before the 29th!)")
-        months = range(1, 13)
-        #   paydays (last working days before the 29th of each month):
-        for month in months:
-            last_days = (calendar.monthcalendar(year, month)[-1:][0][:5])
-            if 28 in last_days:
-                date_string = f"{list(calendar.month_abbr).index(calendar.month_abbr[month]):02d}" +"/"+ "28" +"/"+  f"{year}"
-                print(date_string)
-                f.write("Payday" + "," + date_string + "," + "TRUE" + '\n')
-            elif 27 in last_days:
-                date_string = f"{list(calendar.month_abbr).index(calendar.month_abbr[month]):02d}" +"/"+ "27" +"/"+  f"{year}"
-                print(date_string)
-                f.write("Payday" + "," + date_string + "," + "TRUE" + '\n')
-            elif 26 in last_days:
-                date_string = f"{list(calendar.month_abbr).index(calendar.month_abbr[month]):02d}" +"/"+ "26" +"/"+  f"{year}"
-                print(date_string)
-                f.write("Payday" + "," + date_string + "," + "TRUE" + '\n')
-            elif 29 == last_days[0]:
-                date_string = f"{list(calendar.month_abbr).index(calendar.month_abbr[month]):02d}" +"/"+ "26" +"/"+ f"{year}"
-                print(date_string)
-                f.write("Payday" + "," + date_string + "," + "TRUE" +'\n')
-            elif 30 == last_days[0]:
-                date_string = f"{list(calendar.month_abbr).index(calendar.month_abbr[month]):02d}" +"/"+ "27" +"/"+ f"{year}"
-                print(date_string)
-                f.write("Payday" + "," + date_string + "," + "TRUE" + '\n')
-            elif 31 == last_days[0]:
-                date_string = f"{list(calendar.month_abbr).index(calendar.month_abbr[month]):02d}" +"/"+ "28" +"/"+ f"{year}"
-                print(date_string)
-                f.write("Payday" + "," + date_string + "," + "TRUE" + '\n')
 
+        for year in range (start_year, end_year+1):
+            get_last_day_of_month(year)
